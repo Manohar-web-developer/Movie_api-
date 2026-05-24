@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOVIEZ - Watch Movies Online</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/movies.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/hamburger.css">
+    <link rel="shortcut icon" href="icon/Favicon.png" type="image/x-icon">
+
+</head>
+
+<body>
+    <header class="header">
+        <a href="#" class="logo">
+            <span class="logo-icon" aria-hidden="true">
+                <svg viewBox="0 0 32 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 0L31.5 9V27L16 36L0.5 27V9L16 0Z" fill="#e50914" />
+                    <path d="M13 11L22 18L13 25V11Z" fill="#fff" />
+                </svg>
+            </span>
+            <span class="logo-text">MOVIEZ</span>
+        </a>
+
+        <nav class="nav" aria-label="Main navigation">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link ">Home</a></li>
+                <li><a href="Movies.html" class="nav-link active">Movies</a></li>
+               
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <form class="search-form" role="search">
+                <span class="search-icon search-icon--left" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="7" />
+                        <path d="M20 20L16 16" />
+                    </svg>
+                </span>
+                <input type="search" class="search-input" placeholder="Search movies..." aria-label="Search movies">
+                <button type="submit" class="search-btn" aria-label="Search">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="7" />
+                        <path d="M20 20L16 16" />
+                    </svg>
+                </button>
+            </form>
+            <button type="button" class="sign-in-btn">Sign In</button>
+            <button type="button" class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="movies-main">
+
+        <!-- Page Title -->
+        <div class="movies-header">
+            <div>
+                <h1 class="movies-title">Movies</h1>
+                <p class="movies-subtitle">Discover all the movies. Find your next favorite watch.</p>
+            </div>
+            <p class="movies-count" id="movies-count">Showing 1–20 of 1000+ movies</p>
+        </div>
+
+        <div class="movies-layout">
+
+           
+
+            <!-- RIGHT: Movie Grid -->
+            <div class="movies-right">
+                <div class="movies-grid" id="movies-grid"></div>
+
+                <!-- Pagination -->
+                <div class="pagination" id="pagination"></div>
+            </div>
+
+        </div>
+    </main>
+    <!-- MOVIE DETAIL POPUP -->
+    <div class="overlay" id="movie-overlay">
+        <div class="popup" id="movie-popup">
+
+            <button class="close-btn" id="popup-close">✕</button>
+
+            <div class="popup-top">
+
+                <!-- LEFT -->
+                <div class="popup-left">
+
+                    <!-- Poster with text overlay -->
+                    <div class="popup-poster-wrap">
+                        <img src="" alt="" class="popup-poster" id="popup-poster">
+                        <div class="popup-poster-overlay"></div>
+                        <div class="popup-poster-text">
+                            <p class="popup-director-label" id="popup-director-label"></p>
+                            <h2 class="popup-title" id="popup-title"></h2>
+                            <p class="popup-tagline" id="popup-tagline"></p>
+                            <p class="popup-directed-by" id="popup-directed-by"></p>
+                        </div>
+                    </div>
+
+                    <!-- Info below poster -->
+                    <div class="popup-left-info">
+                        <div class="popup-chips" id="popup-chips"></div>
+                        <p class="popup-genres" id="popup-genres"></p>
+                        <p class="popup-overview" id="popup-overview"></p>
+
+                        <div class="popup-action-btns">
+                            
+                            <button class="watchlist-btn" id="popup-watchlist">+ Watchlist</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT -->
+                <div class="popup-right">
+
+                    <!-- Trailer -->
+                    <div class="popup-trailer-box">
+                        <div id="popup-trailer" class="popup-trailer-inner"></div>
+
+                    </div>
+
+                    <!-- Cast + Details -->
+                    <div class="popup-cast-details">
+
+                        <div class="popup-cast-col">
+                            <p class="popup-col-label">CAST</p>
+                            <div class="popup-cast-grid" id="popup-cast"></div>
+                        </div>
+
+                        <div class="popup-details-col">
+                            <p class="popup-col-label">DETAILS</p>
+                            <div class="popup-details-grid" id="popup-details-grid"></div>
+                            <div class="popup-details-grid" id="popup-extra-details"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Stats (hidden in this design but JS use karta hai) -->
+            <div id="popup-stats" style="display:none;"></div>
+
+            <!-- Bottom Banner -->
+            <div class="popup-bottom-banner">
+                <img src="" alt="" class="popup-bottom-bg" id="popup-bottom-bg">
+                <div class="popup-bottom-overlay"></div>
+                <div class="popup-bottom-content" id="popup-bottom-content"></div>
+            </div>
+
+            <!-- Similar -->
+            <div class="popup-similar-wrap">
+                <div class="popup-section-header">
+                    <span class="popup-section-title">Similar Movies</span>
+                    <a href="#" class="popup-view-all">View All</a>
+                </div>
+                <div class="popup-similar-grid" id="popup-similar"></div>
+            </div>
+
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo footer-logo">
+                    <span class="logo-icon" aria-hidden="true">
+                        <svg viewBox="0 0 32 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 0L31.5 9V27L16 36L0.5 27V9L16 0Z" fill="#e50914" />
+                            <path d="M13 11L22 18L13 25V11Z" fill="#fff" />
+                        </svg>
+                    </span>
+                    <span class="logo-text">MOVIEZ</span>
+                </a>
+                <p class="footer-desc">Your ultimate destination for streaming the latest movies and TV shows. Enjoy in
+                    HD quality.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="Facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Twitter">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="YouTube">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M22.54 6.42a2.78 2.78 0 0 0-1.95-2C18.88 4 12 4 12 4s-6.88 0-8.59.42a2.78 2.78 0 0 0-1.95 2 29 29 0 0 0-.42 5.58 29 29 0 0 0 .42 5.58 2.78 2.78 0 0 0 1.95 2C5.12 20 12 20 12 20s6.88 0 8.59-.42a2.78 2.78 0 0 0 1.95-2 29 29 0 0 0 .42-5.58 29 29 0 0 0-.42-5.58z" />
+                            <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#1e1e1e" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3 class="footer-heading">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="Movies.html">Movies</a></li>
+                    <li><a href="#">TV Shows</a></li>
+                    <li><a href="#">Top IMDB</a></li>
+                    <li><a href="#">New Releases</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3 class="footer-heading">Genres</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Comedy</a></li>
+                    <li><a href="#">Drama</a></li>
+                    <li><a href="#">Horror</a></li>
+                    <li><a href="#">Romance</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3 class="footer-heading">Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">DMCA</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col footer-newsletter">
+                <h3 class="footer-heading">Newsletter</h3>
+                <p class="footer-desc">Subscribe to get the latest updates and new releases.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email"
+                        aria-label="Email address">
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <p class="footer-copyright">© 2026 Moviez. All rights reserved.</p>
+    </footer>
+    <script src="js/popup.js"></script>
+    <script src="js/movies.js">
+    </script>
+    <!-- <script src="js/script.js"></script> -->
+</body>
+
+</html>
