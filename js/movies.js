@@ -1,5 +1,3 @@
-
-
 const API_KEY = "8b6e9b0f80c1340d69cab7c761dadf27";
 const BASE_URL = "https://api.themoviedb.org/3";
 const imagePath = "https://image.tmdb.org/t/p/original";
@@ -7,6 +5,7 @@ const posterPath = "https://image.tmdb.org/t/p/w500";
 
 let currentPage = 1;
 let totalPages = 0;
+let originalMovies = []; // keeps the last non-search movie list, used to restore when search is cleared
 
 
 
@@ -107,6 +106,7 @@ const pagination = async () => {
     document.getElementById("movies-count").innerText =
         `Showing ${startMovie}–${endMovie} of ${allMovieres.total_results} movies`;
 
+    originalMovies = allMovieres.results;
     renderMovies(allMovieres.results)
     renderPagination();
 
@@ -119,45 +119,39 @@ const changePage = async (page) => {
 }
 pagination()
 
-let searchInput =
-    document.getElementById("filter-search");
-
-searchInput.addEventListener("input",
-    async () => {
-
-        let query = searchInput.value;
-        if (query === '') {
-            renderMovies(data.results);
-        }
-        let url =
-            `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}`;
-
-        let res = await fetch(url);
-
-        let data = await res.json();
-
-        renderMovies(data.results);
-
-    })
+// NOTE: "filter-search" element does not exist in Movies.html, so
+// document.getElementById("filter-search") was returning null, and
+// calling .addEventListener on null crashed the whole script here —
+// which is why the hamburger menu and the header search box below
+// never worked (their event listeners never got attached).
 
 let topSearchInput =
     document.querySelector(".search-input");
 
+// The search input sits inside a <form>. Without this, clicking the
+// search button (type="submit") or pressing Enter reloads the page.
+document.querySelector(".search-form")
+    .addEventListener("submit", (e) => e.preventDefault());
+
 topSearchInput.addEventListener("input",
     async () => {
 
-        let query = topSearchInput.value;
+        let query = topSearchInput.value.trim();
+
         if (query === '') {
-            renderMovies(data.results);
+            // restore the normal movie list instead of an undefined "data"
+            renderMovies(originalMovies);
+            return;
         }
+
         let url =
-            `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}`;
+            `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}`;
 
         let res = await fetch(url);
 
         let data = await res.json();
 
-        renderMovies(data.results);
+        renderMovies(data.results || []);
 
     })
 
